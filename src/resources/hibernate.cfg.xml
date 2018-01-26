@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">
+            org.hibernate.dialect.MySQLDialect
+        </property>
+        <property name="hibernate.connection.driver_class">
+            com.mysql.jdbc.Driver
+        </property>
+
+        <!-- Assume test is the database name -->
+        <property name="hibernate.connection.url">jdbc:mysql://localhost/project_management_system</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">123456789</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.c3p0.timeout">0</property>
+
+        <!-- List of XML mapping files -->
+       <!-- <mapping resource="resources/Developer.hbm.xml"/> -->
+        <mapping class="main.java.net.petriv.model.Developer"/>
+        <mapping class="main.java.net.petriv.model.Skill"/>
+
+    </session-factory>
+</hibernate-configuration>
+
