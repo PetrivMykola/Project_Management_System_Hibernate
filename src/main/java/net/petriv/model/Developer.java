@@ -1,12 +1,14 @@
 package main.java.net.petriv.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "developer")
-public class Developer {
+@Table(name = "DEVELOPER")
+public class Developer implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "id")
@@ -27,13 +29,15 @@ public class Developer {
     @Column(name = "salary")
     private int salary;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "developer_skill",
-            joinColumns = @JoinColumn(name = "developer_id"),
-            inverseJoinColumns = @JoinColumn(name = "skill_id")
-    )
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "DEVELOPER_SKILL",
+        joinColumns = {@JoinColumn(name = "DEVELOPER_ID")},
+        inverseJoinColumns = {@JoinColumn(name = "SKILL_ID")})
     private Set<Skill> skills = new HashSet<>();
+
+
+
+    private Team team;
 
     public Developer() {
     }
@@ -106,7 +110,8 @@ public class Developer {
                 "Last Name: " + lastName + "\n" +
                 "Specialty: " + specialty + "\n" +
                 "Experience: " + experience + "\n" +
-                "Salary: " + salary + "\n";
+                "Salary: " + salary + "\n" +
+                 skills + "\n";
     }
 
 }

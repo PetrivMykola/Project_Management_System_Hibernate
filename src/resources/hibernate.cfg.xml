@@ -15,13 +15,16 @@
         <property name="hibernate.connection.url">jdbc:mysql://localhost/project_management_system</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">123456789</property>
-        <property name="hibernate.show_sql">true</property>
-        <property name="hibernate.c3p0.timeout">0</property>
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
 
         <!-- List of XML mapping files -->
-       <!-- <mapping resource="resources/Developer.hbm.xml"/> -->
         <mapping class="main.java.net.petriv.model.Developer"/>
         <mapping class="main.java.net.petriv.model.Skill"/>
+        <mapping class="main.java.net.petriv.model.Team"/>
+        <mapping class="main.java.net.petriv.model.Project"/>
+        <mapping class="main.java.net.petriv.model.Company"/>
+        <mapping class="main.java.net.petriv.model.Customer"/>
 
     </session-factory>
 </hibernate-configuration>

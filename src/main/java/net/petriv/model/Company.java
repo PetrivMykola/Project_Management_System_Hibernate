@@ -1,24 +1,31 @@
 package main.java.net.petriv.model;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Company {
+@Entity
+@Table(name = "COMPANY")
+public class Company implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "company_name")
     private String name;
-    private List<Project> projects;
 
-    public Company(int id, String name, List<Project> projects) {
-        this.id = id;
-        this.name = name;
-        this.projects = projects;
-    }
-
-    public Company(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "CUSTOMER_COMPANY",
+        joinColumns = {@JoinColumn(name = "company_id")},
+        inverseJoinColumns = {@JoinColumn(name = "customer_id")})
+    private List<Customer> customers = new ArrayList<>();
 
     public Company() {
+    }
+
+    public Company(String name) {
+        this.name = name;
     }
 
     public int getId() {
@@ -37,12 +44,12 @@ public class Company {
         this.name = name;
     }
 
-    public List<Project> getProjects() {
-        return projects;
+    public List<Customer> getCustomers() {
+        return customers;
     }
 
-    public void setProjects(List<Project> projects) {
-        this.projects = projects;
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
     }
 
     @Override
@@ -50,7 +57,7 @@ public class Company {
         return "Company{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", projects=" + projects +
+                ", customers=" + customers +
                 '}';
     }
 }

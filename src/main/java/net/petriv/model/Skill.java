@@ -1,32 +1,23 @@
 package main.java.net.petriv.model;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "skill")
-public class Skill {
+@Table(name = "SKILL")
+public class Skill implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "id")
     private int id;
 
-    @Column (name = "name")
+    @Column (name = "skill_name")
     private String name;
-
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "skills")
-    private Set<Developer> developers = new HashSet<>();
 
     public Skill() { }
 
-
-    public Set<Developer> getDevelopers() {
-        return developers;
-    }
-
-    public void setDevelopers(Set<Developer> developers) {
-        this.developers = developers;
+    public Skill(String name) {
+        this.name = name;
     }
 
     public int getId() {
@@ -48,8 +39,8 @@ public class Skill {
     @Override
     public String toString() {
         return "Skill:\n" +
-                "id: " + id +
-                "\nName: " + name + "\n";
+                "id: " + id + "\n" +
+                "Name: " + name + "\n" ;
 
     }
-    }
+}

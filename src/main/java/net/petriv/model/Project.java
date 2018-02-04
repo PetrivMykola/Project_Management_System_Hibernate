@@ -1,24 +1,30 @@
 package main.java.net.petriv.model;
 
-import java.util.List;
+import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.*;
+import java.io.Serializable;
 
-public class Project {
+@Entity
+@Table(name = "PROJECT")
+public class Project implements Serializable {
+    @Id
+    @GeneratedValue(generator = "gen")
+    @GenericGenerator(name = "gen", strategy = "foreign",
+            parameters = @org.hibernate.annotations.Parameter(name = "property", value = "team"))
     private int id;
+
+    @Column(name = "project_name")
     private String name;
-    private List<Team> teams;
 
-    public Project(int id, String name, List<Team> teams) {
-        this.id = id;
-        this.name = name;
-        this.teams = teams;
-    }
-
-    public Project(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private Team team;
 
     public Project() {
+    }
+
+    public Project(String name) {
+        this.name = name;
     }
 
     public int getId() {
@@ -37,12 +43,12 @@ public class Project {
         this.name = name;
     }
 
-    public List<Team> getTeams() {
-        return teams;
+    public Team getTeam() {
+        return team;
     }
 
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     @Override
@@ -50,7 +56,7 @@ public class Project {
         return "Project{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", teams=" + teams +
+                ", team=" + team +
                 '}';
     }
 }

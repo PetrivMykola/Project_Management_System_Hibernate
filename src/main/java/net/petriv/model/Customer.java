@@ -1,27 +1,33 @@
 package main.java.net.petriv.model;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Customer {
+@Entity
+@Table(name = "CUSTOMER")
+public class Customer implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String firstName;
-    private String lastName;
-    private String address;
-    List<Company> companies;
 
-    public Customer(int id, String firstName, String lastName, String address, List<Company> companies) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.companies = companies;
-    }
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "address")
+    private String address;
+
+    @ManyToMany(mappedBy = "customers")
+    private List<Company> companies = new ArrayList<>();
 
     public Customer() {
     }
 
-    public Customer(int id, String firstName, String lastName, String address) {
-        this.id = id;
+    public Customer(String firstName, String lastName, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;

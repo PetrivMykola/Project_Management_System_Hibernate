@@ -1,24 +1,31 @@
 package main.java.net.petriv.model;
 
-import java.util.List;
+import com.mysql.jdbc.Constants;
 
-public class Team {
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "TEAM")
+public class Team implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "team_name")
     private String name;
-    private List<Developer> developers;
 
-    public Team(int id, String name, List<Developer> developers) {
-        this.id = id;
-        this.name = name;
-        this.developers = developers;
-    }
-
-    public Team(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    @OneToOne(mappedBy = "team", cascade = CascadeType.ALL)
+    private Project project;
 
     public Team() {
+    }
+
+    public Team(String name) {
+        this.name = name;
     }
 
     public int getId() {
@@ -37,12 +44,12 @@ public class Team {
         this.name = name;
     }
 
-    public List<Developer> getDevelopers() {
-        return developers;
+    public Project getProject() {
+        return project;
     }
 
-    public void setDevelopers(List<Developer> developers) {
-        this.developers = developers;
+    public void setProject(Project project) {
+        this.project = project;
     }
 
     @Override
@@ -50,7 +57,6 @@ public class Team {
         return "Team{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", developers=" + developers +
-                '}';
+                '}' + "\n";
     }
 }
